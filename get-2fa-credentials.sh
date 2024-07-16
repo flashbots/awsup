@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e -o pipefail
 
@@ -37,7 +37,7 @@ if [[ "${NOW}" > "${EXPIRATION}" ]]; then
     echo "Logging in..." >> "${HOME}/.aws/debug.log"
   fi
 
-  "${pwd}/login.sh"
+  "${pwd}/helper.sh" --login
   AWS_SESSION_TOKEN=$( get_2fa_token )
 fi
 

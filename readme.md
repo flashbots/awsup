@@ -1,30 +1,50 @@
-# Storing AWS CLI credentials in macOS keychain
+# AWS CLI Helper
 
->
-> Scripts here assume that the following environment variables are correctly
-> assigned in your `.zshrc`/`.bashrc`:
->
-> - `AWS_ACCOUNT_ID`
-> - `AWS_IAM_USERNAME`
->
+AWS CLI Helper makes configuration easy and authentication very easy.
 
-Create AWS access key and run the script below.
+## Supported environments
+
+- OS: `macOS`, `Ubuntu`
+- Shell: `zsh`, `bash`
+- OTP engine: `Yubikey`, `1password`, `manual`
+- Vault engine: `macOS Keychain`, `file`
+
+## Quick start
 
 ```bash
-# The spaces in front are to prevent storing secrets in terminal history
-  AWS_ACCESS_KEY_ID=XXX
-  AWS_SECRET_ACCESS_KEY=YYY
-
-AWS_USER_ARN="arn:aws:iam::$AWS_ACCOUNT_ID:user/$AWS_IAM_USERNAME"
-AWS_CREDENTIALS="{\"Version\":1,\"AccessKeyId\":\"$AWS_ACCESS_KEY_ID\",\"SecretAccessKey\":\"$AWS_SECRET_ACCESS_KEY\"}"
-
-security add-generic-password -l "$AWS_USER_ARN" -a "$AWS_USER_ARN" -s "$AWS_USER_ARN" -w "$AWS_CREDENTIALS"
+curl -sL https://raw.githubusercontent.com/0x416e746f6e/.aws/main/awsup.sh | bash
 ```
 
-## Using short-lived tokens with AWS CLI
+## The helper tool
 
-1. Configure MFA with your AWS account.
+Once you finish the setup process, you won't need to interact with the helper
+tool `~/.aws/helper.sh`. However, if you need to make changes or redo your setup,
+then you can use these arguments.
 
-2. Run `~/.aws/login.sh` and enter your one-time password from MFA. If
-   all is Ok it will generate a short-lived auth token and store it in
-   the keychain for later use by AWS CLI.
+### Use an existing aws config
+
+After setup, you can specify a custom config file. This lets private
+data like roles and account IDs to be managed privately.
+
+```bash
+~/.aws/helper.sh --custom-config /path/to/config # File
+~/.aws/helper.sh --custom-config https://config  # URL
+```
+
+### Redo the setup
+
+```bash
+~/.aws/helper.sh --setup
+```
+
+### Manually trigger a login
+
+```bash
+~/.aws/helper.sh --login
+```
+
+### Delete login lock
+
+```bash
+~/.aws/helper.sh --delete-lock
+```

@@ -1,11 +1,11 @@
 [default]
-cli_pager=
-output=json
+cli_pager =
+output = json
 
 [profile 1fa]
 cli_pager =
-output=json
+output = json
 
 [profile 2fa]
 cli_pager =
-output=json
+output = json

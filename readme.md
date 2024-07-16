@@ -12,7 +12,7 @@ AWS CLI Helper makes configuration easy and authentication very easy.
 ## Quick start
 
 ```bash
-curl -sL https://raw.githubusercontent.com/0x416e746f6e/.aws/main/awsup.sh | bash
+curl -sL https://raw.githubusercontent.com/flashbots/.aws/main/awsup.sh | bash
 ```
 
 ## The helper tool

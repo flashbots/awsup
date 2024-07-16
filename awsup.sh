@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# https://github.com/0x416e746f6e/.aws
+# https://github.com/flashbots/.aws
 #
 #
 
@@ -8,17 +8,19 @@ set -eo pipefail
 echo "🆙 Starting awsup..."
 
 TARGET_DIR="${HOME}/.aws"
-REPO_URL="https://github.com/0x416e746f6e/.aws.git"
+REPO_URL="https://github.com/flashbots/.aws.git"
 REPO_BRANCH="main"
 
 DATE=$(date +%Y-%m-%d_%H-%M-%S)
 BACKUP_DIR="${TARGET_DIR}/backup-${DATE}"
 TEMP_DIR="$( mktemp -d -t awsup-XXX )"
 
-if ! command -v git &> /dev/null; then
-    echo "🚫 Git is not installed. Please install Git and try again."
-    exit 1
-fi
+git_check() {
+    if ! command -v git &> /dev/null; then
+        echo "🚫 Git is not installed. Please install Git and try again."
+        exit 1
+    fi
+}
 
 handle_file_backup() {
     echo "🔄 Backing up ${TARGET_DIR} to ${BACKUP_DIR}..."
@@ -35,7 +37,6 @@ handle_file_backup() {
 handle_installation() {
     echo "🔄 Downloading and installing..."
 
-    mkdir -p "${TEMP_DIR}"
     pushd "${TEMP_DIR}" > /dev/null 2>&1
 
     git clone "${REPO_URL}" > /dev/null 2>&1
@@ -52,11 +53,11 @@ handle_installation() {
 
     popd > /dev/null 2>&1
 
-    rm -rf "${TEMP_DIR}"
-
     echo "✅ Installation complete! To finish setup, run:"
     echo "✨    . ~/.aws/helper.sh --setup"
 }
+
+git_check
 
 handle_file_backup
 

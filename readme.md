@@ -2,6 +2,12 @@
 
 AWS CLI Helper makes configuration easy and authentication very easy.
 
+## Quick start
+
+```bash
+curl -sL install.awsup.sh | bash
+```
+
 ## Supported environments
 
 - OS: `macOS`, `Ubuntu`
@@ -9,22 +15,13 @@ AWS CLI Helper makes configuration easy and authentication very easy.
 - OTP engine: `Yubikey`, `1password`, `manual`
 - Vault engine: `macOS Keychain`, `file`
 
-## Quick start
-
-```bash
-curl -sL https://raw.githubusercontent.com/flashbots/.aws/main/awsup.sh | bash
-```
-
 ## The helper tool
 
-Once you finish the setup process, you won't need to interact with the helper
-tool `~/.aws/helper.sh`. However, if you need to make changes or redo your setup,
-then you can use these arguments.
+Once you finish the setup process, you won't need to interact with the helper tool `~/.aws/helper.sh`. However, if you need to make changes or redo your setup, then you can use these arguments.
 
 ### Use an existing aws config
 
-After setup, you can specify a custom config file. This lets private
-data like roles and account IDs to be managed privately.
+After setup, you can specify a custom config file. This lets private data like roles and account IDs to be managed privately.
 
 ```bash
 ~/.aws/helper.sh --custom-config /path/to/config # File

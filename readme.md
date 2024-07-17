@@ -1,6 +1,6 @@
 # awsup
 
-AWS CLI Helper makes configuration easy and authentication very easy.	awsup is an installer for the [aws cli](https://aws.amazon.com/cli/). it aims to make configuration easy and authentication very easy.
+awsup is an installer for the [aws cli](https://aws.amazon.com/cli/). it aims to make configuration easy and authentication very easy.
 
 ## Quick start
 

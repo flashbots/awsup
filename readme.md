@@ -1,11 +1,11 @@
-# AWS CLI Helper
+# awsup
 
-AWS CLI Helper makes configuration easy and authentication very easy.
+AWS CLI Helper makes configuration easy and authentication very easy.	awsup is an installer for the [aws cli](https://aws.amazon.com/cli/). it aims to make configuration easy and authentication very easy.
 
 ## Quick start
 
 ```bash
-curl -sL install.awsup.sh | bash
+curl -sL awsup.sh | bash
 ```
 
 ## Supported environments
@@ -45,3 +45,9 @@ After setup, you can specify a custom config file. This lets private data like r
 ```bash
 ~/.aws/helper.sh --delete-lock
 ```
+
+## Giants
+
+- [0x416e746f6e](https://github.com/0x416e746f6e/.aws)
+- [rustup](https://github.com/rust-lang/rustup)
+- [suaveup](https://github.com/flashbots/suave-geth/tree/main/suave/suaveup)

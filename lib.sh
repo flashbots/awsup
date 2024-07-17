@@ -321,7 +321,7 @@ function delete_lock() {
 
 function get_help_message() {
   local HELP_MESSAGE=<<EOF
-        CLI for aws-cli-helper.
+        CLI for awsup helper.
 
         Usage:
 

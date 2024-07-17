@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# https://github.com/flashbots/.aws
+# https://github.com/flashbots/awsup
 #
 #
 
@@ -8,7 +8,7 @@ set -eo pipefail
 echo "🆙 Starting awsup..."
 
 TARGET_DIR="${HOME}/.aws"
-REPO_URL="https://github.com/flashbots/.aws.git"
+REPO_URL="https://github.com/flashbots/awsup.git"
 
 DATE=$(date +%Y-%m-%d_%H-%M-%S)
 BACKUP_DIR="${TARGET_DIR}/backup-${DATE}"
@@ -40,8 +40,8 @@ handle_installation() {
 
     git clone "${REPO_URL}" > /dev/null 2>&1
 
-    rm -rf .aws/.git
-    cp -r .aws/* "${TARGET_DIR}/"
+    rm -rf awsup/.git
+    cp -r awsup/* "${TARGET_DIR}/"
 
     if [[ "$OSTYPE" == "darwin"* ]]; then
         sed -i '' "s|/Users/anton/|$HOME/|g" "${TARGET_DIR}/credentials"

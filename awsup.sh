@@ -9,7 +9,6 @@ echo "🆙 Starting awsup..."
 
 TARGET_DIR="${HOME}/.aws"
 REPO_URL="https://github.com/flashbots/.aws.git"
-REPO_BRANCH="main"
 
 DATE=$(date +%Y-%m-%d_%H-%M-%S)
 BACKUP_DIR="${TARGET_DIR}/backup-${DATE}"
@@ -40,10 +39,9 @@ handle_installation() {
     pushd "${TEMP_DIR}" > /dev/null 2>&1
 
     git clone "${REPO_URL}" > /dev/null 2>&1
-    cd .aws
-    git checkout "${REPO_BRANCH}" > /dev/null 2>&1
-    rm -rf .git
-    cp -r ./* "${TARGET_DIR}/"
+
+    rm -rf .aws/.git
+    cp -r .aws/* "${TARGET_DIR}/"
 
     if [[ "$OSTYPE" == "darwin"* ]]; then
         sed -i '' "s|/Users/anton/|$HOME/|g" "${TARGET_DIR}/credentials"

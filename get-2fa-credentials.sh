@@ -17,12 +17,12 @@ fi
 
 # Log the attempt
 PID=$$
-ARG=$( ps -ww -o args= -p "${PID}" )
-PARG=$( ps -ww -o args= -p "${PPID}" | tr '"' '\"' )
-PPPID=$( ps -o ppid= -p "${PPID}" )
-PPARG=$( ps -ww -o args= -p "${PPPID}" | tr '"' '\"' )
-PPPPID=$( ps -o ppid= -p "${PPPID}" )
-PPPARG=$( ps -ww -o args= -p "${PPPPID}" | tr '"' '\"' )
+ARG=$( ps -ww -o args= -p $PID )
+PARG=$( ps -ww -o args= -p $PPID | tr '"' '\"' )
+PPPID=$( ps -o ppid= -p $PPID )
+PPARG=$( ps -ww -o args= -p $PPPID | tr '"' '\"' )
+PPPPID=$( ps -o ppid= -p $PPPID )
+PPPARG=$( ps -ww -o args= -p $PPPPID | tr '"' '\"' )
 printf '{ "ts": "%s", "expiration": "%s", "grandgrandparent": { "pid": %s, "command": "%s" }, "grandparent": { "pid": %s, "command": "%s" }, "parent": { "pid": %s, "command": "%s" }, "self": { "pid": %s, "command": "%s" } }\n' \
     "${NOW}" \
     "${EXPIRATION}" \

@@ -157,7 +157,7 @@ function save_2fa_token_file() {
 function get_2fa_otp_manual() {
   local PIN
   while true; do
-    PIN="$( get_prompt_private_string "🔑 Enter one-time password for \`${AWS_HELPER_MFA_DEVICE_ARN}\`:" )"
+    PIN="$( get_prompt_private_string "Enter one-time password for \`${AWS_HELPER_MFA_DEVICE_ARN}\`:" )"
     if [[ "${PIN}" =~ ^[0-9]{6}$ ]]; then
       break
     else

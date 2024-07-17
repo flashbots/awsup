@@ -1,5 +1,3 @@
-AWS_HELPER_PROFILE="${HOME}/.profile"
-
 function get_1fa_token() {
   case "${AWS_HELPER_VAULT_ENGINE}" in
     osxkeychain)
@@ -254,6 +252,7 @@ function get_prompt_bool() {
 function set_profile_env() {
   local KEY="$1"
   local VALUE="$2"
+  local AWS_HELPER_PROFILE="${HOME}/.awsup"
 
   if grep -q "^export ${KEY}=" "${AWS_HELPER_PROFILE}"; then
     if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -267,6 +266,8 @@ function set_profile_env() {
 }
 
 function save_setup() {
+  touch "${HOME}/.awsup"
+
   local SETUP_AWS_HELPER_ACCOUNT_ID="$( get_prompt_string "Enter your AWS account ID:" )"
   local SETUP_AWS_HELPER_IAM_USERNAME="$( get_prompt_string "Enter your IAM username:" )"
   local SETUP_AWS_HELPER_USER_ARN="arn:aws:iam::${SETUP_AWS_HELPER_ACCOUNT_ID}:user/${SETUP_AWS_HELPER_IAM_USERNAME}"
@@ -295,6 +296,8 @@ function save_setup() {
   local SETUP_AWS_ACCESS_KEY_ID="$( get_prompt_private_string "Enter your AWS access key ID:" )"
   local SETUP_AWS_SECRET_ACCESS_KEY="$( get_prompt_private_string "Enter your AWS secret access key:" )"
   local SETUP_AWS_HELPER_CREDENTIALS="{\"Version\":1,\"AccessKeyId\":\"${SETUP_AWS_ACCESS_KEY_ID}\",\"SecretAccessKey\":\"${SETUP_AWS_SECRET_ACCESS_KEY}\"}"
+
+  source_config
 
   save_1fa_token "${SETUP_AWS_HELPER_USER_ARN}" "${SETUP_AWS_HELPER_CREDENTIALS}"
   save_2fa_token $( request_2fa_token )
@@ -338,3 +341,11 @@ EOF
 
   echo "${HELP_MESSAGE}"
 }
+
+function source_config() {
+  local AWS_HELPER_PROFILE="${HOME}/.awsup"
+
+  [ -f "${AWS_HELPER_PROFILE}" ] && source "${AWS_HELPER_PROFILE}"
+}
+
+source_config

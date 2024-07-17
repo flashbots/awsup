@@ -266,8 +266,6 @@ function set_profile_env() {
 }
 
 function save_setup() {
-  touch "${HOME}/.awsup"
-
   local SETUP_AWS_HELPER_ACCOUNT_ID="$( get_prompt_string "Enter your AWS account ID:" )"
   local SETUP_AWS_HELPER_IAM_USERNAME="$( get_prompt_string "Enter your IAM username:" )"
   local SETUP_AWS_HELPER_USER_ARN="arn:aws:iam::${SETUP_AWS_HELPER_ACCOUNT_ID}:user/${SETUP_AWS_HELPER_IAM_USERNAME}"
@@ -345,7 +343,7 @@ EOF
 function source_config() {
   local AWS_HELPER_PROFILE="${HOME}/.awsup"
 
-  [ -f "${AWS_HELPER_PROFILE}" ] && source "${AWS_HELPER_PROFILE}"
+  touch "${AWS_HELPER_PROFILE}" && source "${AWS_HELPER_PROFILE}"
 }
 
 source_config

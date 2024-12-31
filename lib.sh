@@ -178,10 +178,8 @@ function request_2fa_token() {
       read
     fi
     PIN=$( $ykman oath accounts code --single ${AWS_HELPER_MFA_DEVICE_ARN} )
-  elif op=$(which op); then
-    if [ -n "${AWS_HELPER_OP_ITEM}" ]; then
-      PIN=$( $op item get ${AWS_HELPER_OP_ITEM} --otp )
-    fi
+  elif op=$( which op ) && [ -n "${AWS_HELPER_OP_ITEM}" ]; then
+    PIN=$( $op item get ${AWS_HELPER_OP_ITEM} --otp )
   else
     PIN=$( get_2fa_otp_manual )
   fi

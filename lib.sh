@@ -153,12 +153,17 @@ function save_2fa_token_file() {
 }
 
 function get_2fa_otp_manual() {
-  local PIN
+  local PIN invalid_count=0
   while true; do
     PIN="$( get_prompt_private_string "Enter one-time password for \`${AWS_HELPER_MFA_DEVICE_ARN}\`:" )"
     if [[ "${PIN}" =~ ^[0-9]{6}$ ]]; then
       break
     else
+      invalid_count=$((invalid_count + 1))
+      if [[ ${invalid_count} -ge 5 ]]; then
+        printf "%s\n" "⛔️ Aborting after 5 invalid inputs." >/dev/tty
+        exit 1
+      fi
       printf "%s " "🚫 Invalid input. Please enter a 6-digit number." >/dev/tty
       printf "\n" >/dev/tty
     fi

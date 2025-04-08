@@ -177,7 +177,7 @@ function request_2fa_token() {
   echo "🔄 Logging into AWS..." >&2
 
   # Check if Yubikey or 1password are available
-  if ykman=$( which ykman ) && if [[ "${SETUP_AWS_HELPER_YKMAN:-0}" -eq 1 ]]; then
+  if ykman=$( which ykman ) && [[ "${SETUP_AWS_HELPER_YKMAN:-0}" -eq 1 ]]; then
       if [ -z "$( $ykman list )" ]; then
         echo "🔑 Please insert your yubikey and hit <ENTER>..." >&2
         read

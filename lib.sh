@@ -177,12 +177,13 @@ function request_2fa_token() {
   echo "🔄 Logging into AWS..." >&2
 
   # Check if Yubikey or 1password are available
-  if ykman=$( which ykman ); then
-    if [ -z "$( $ykman list )" ]; then
-      echo "🔑 Please insert your yubikey and hit <ENTER>..." >&2
-      read
+  if ykman=$( which ykman ) && if [[ "${SETUP_AWS_HELPER_YKMAN:-0}" -eq 1 ]]; then
+      if [ -z "$( $ykman list )" ]; then
+        echo "🔑 Please insert your yubikey and hit <ENTER>..." >&2
+        read
+      fi
+      PIN=$( $ykman oath accounts code --single ${AWS_HELPER_MFA_DEVICE_ARN} )
     fi
-    PIN=$( $ykman oath accounts code --single ${AWS_HELPER_MFA_DEVICE_ARN} )
   elif op=$( which op ) && [ -n "${AWS_HELPER_OP_ITEM}" ]; then
     PIN=$( $op item get ${AWS_HELPER_OP_ITEM} --otp )
   else
@@ -287,6 +288,11 @@ function save_setup() {
   if get_prompt_bool "Do you use 1password client for 2fa?"; then
     local SETUP_AWS_HELPER_OP_ITEM="$( get_prompt_string "Enter the name or ID of your 1password item:" )"
     set_profile_env "AWS_HELPER_OP_ITEM" "${SETUP_AWS_HELPER_OP_ITEM}"
+  fi
+
+  if get_prompt_bool "Do you use Yubikey client for 2fa?"; then
+    local SETUP_AWS_HELPER_YKMAN=1
+    set_profile_env "AWS_HELPER_YKMAN" "${SETUP_AWS_HELPER_YKMAN}"
   fi
 
   if get_prompt_bool "Do you want to add a custom aws config file?"; then
